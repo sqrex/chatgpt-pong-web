@@ -1,12 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pong Game</title>
-</head>
-<body style="background-color: black;">
-    <canvas id="pongCanvas" width="800" height="400" style="border:1px solid white; margin: 50px auto; display:block;"></canvas>
-    <script src="pong.js"></script>
-</body>
-</html>
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+}
+
+canvas {
+    border: 1px solid white;
+}
+
+@font-face {
+    font-family: 'SleekFont';
+    /* Add a link to your font file below */
+    src: url('path_to_your_font.woff2') format('woff2');
+}
