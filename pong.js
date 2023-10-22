@@ -15,7 +15,8 @@ let playerPaddle = {
     y: canvas.height / 2 - 60,
     width: 10,
     height: 120,
-    dy: 4
+    dy: 4,
+    score: 0
 };
 
 let aiPaddle = {
@@ -23,7 +24,9 @@ let aiPaddle = {
     y: canvas.height / 2 - 60,
     width: 10,
     height: 120,
-    dy: 4
+    dy: 4,
+    color: "red",
+    score: 0
 };
 
 function movePaddle(paddle, upKey, downKey) {
@@ -63,25 +66,39 @@ function update() {
         ball.dx = -ball.dx;
     }
 
-    if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
-        ball.x = canvas.width / 2;
-        ball.y = canvas.height / 2;
-        ball.dx = -ball.dx;
+    if (ball.x - ball.radius < 0) {
+        aiPaddle.score++;
+        resetBall();
+    } else if (ball.x + ball.radius > canvas.width) {
+        playerPaddle.score++;
+        resetBall();
     }
 
     aiMovement();
+}
+
+function resetBall() {
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
+    ball.dx = -ball.dx;
 }
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "white";
     ctx.fillRect(playerPaddle.x, playerPaddle.y, playerPaddle.width, playerPaddle.height);
+    ctx.fillStyle = aiPaddle.color;
     ctx.fillRect(aiPaddle.x, aiPaddle.y, aiPaddle.width, aiPaddle.height);
+    ctx.fillStyle = "white";
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2, false);
-    ctx.fillStyle = "white";
     ctx.fill();
     ctx.closePath();
+
+    // Scoreboard
+    ctx.font = "30px Arial";
+    ctx.fillText("HUMAN: " + playerPaddle.score, 20, 30);
+    ctx.fillText("ESKOM: " + aiPaddle.score, canvas.width - 170, 30);
 }
 
 function gameLoop() {
